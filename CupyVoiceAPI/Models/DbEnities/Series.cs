@@ -1,4 +1,4 @@
-﻿namespace CupyVoiceAPI.Models;
+﻿namespace CupyVoiceAPI.Models.DbEnities;
 
 /// <summary>
 /// Серии
