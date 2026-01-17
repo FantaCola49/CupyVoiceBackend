@@ -1,0 +1,23 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/CupyVoiceAPI/.vs/CupyVoiceAPI.slnx
+/.vs
+# Large media files
+*.mp4
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+
+.vs/
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
+SwaggerDocs.xml
+Logs/internal-nlog.txt
