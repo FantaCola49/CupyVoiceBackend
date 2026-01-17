@@ -1,8 +1,11 @@
-﻿namespace CupyVoiceAPI.Models.DbEnities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CupyVoiceAPI.Models.DbEnities;
 
 /// <summary>
 /// Прогресс просмотра
 /// </summary>
+[Table("watch_progress")]
 public sealed class WatchProgress
 {
     /// <summary>

@@ -1,23 +1,30 @@
-﻿namespace CupyVoiceAPI.Models.DbEnities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CupyVoiceAPI.Models.DbEnities;
 
 /// <summary>
-/// Сезон
+/// Сизон
 /// </summary>
+[Table("seasons")]
 public sealed class Season
 {
     /// <summary>
     /// Id сизона
     /// </summary>
+    [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
-    
+
     /// <summary>
     /// Id серии
     /// </summary>
+    [Required]
     public Guid SeriesId { get; set; }
-    
+
     /// <summary>
-    /// Номер сезона
+    /// Номер сизона
     /// </summary>
+    [Required]
     public int Number { get; set; }
 
     /// <summary>

@@ -1,4 +1,6 @@
 using CupyVoiceAPI.Data;
+using CupyVoiceAPI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace CupyVoiceAPI;
 
@@ -11,12 +13,15 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        #region Services
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddOpenApi();
+        builder.Services.AddApplicationServices(); // регистрирую все рабочие сервисы
+
+        #endregion
 
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
@@ -24,8 +29,31 @@ public class Program
                      ?? throw new InvalidOperationException("Missing connection string: ConnectionStrings:Default");
             options.UseNpgsql(cs);
         });
-        var app = builder.Build();
+        builder.Services.Configure<ApiBehaviorOptions>(o =>
+        {
+            o.InvalidModelStateResponseFactory = ctx =>
+            {
+                var pd = new ValidationProblemDetails(ctx.ModelState)
+                {
+                    Title = "Validation failed",
+                    Status = StatusCodes.Status400BadRequest
+                };
+                return new BadRequestObjectResult(pd);
+            };
+        });
 
+        builder.Services.AddCors(opt =>
+        {
+            opt.AddPolicy("frontend", p =>
+            {
+                p.WithOrigins("http://localhost:5173")
+                 .AllowAnyHeader()
+                 .AllowAnyMethod();
+            });
+        });
+
+        var app = builder.Build();
+        app.UseCors("frontend");
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
