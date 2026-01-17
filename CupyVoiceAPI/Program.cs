@@ -25,7 +25,7 @@ namespace CupyVoiceAPI
 
             app.UseAuthorization();
 
-
+            
             app.MapControllers();
 
             app.Run();
